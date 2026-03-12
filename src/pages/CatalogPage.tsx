@@ -9,6 +9,7 @@ import { Toast } from "../components/toast/Toast";
 import { Loader } from "../components/ui/Loader";
 import { ErrorState } from "../components/ui/ErrorState";
 import { EmptyState } from "../components/ui/EmptyState";
+import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProducts";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { PRODUCTS_PER_PAGE } from "../constants/pagination";
@@ -17,41 +18,13 @@ import { paginate } from "../utils/paginate";
 import type { SortOption } from "../constants/sortOptions";
 import type { Product } from "../types/product";
 
-const CART_STORAGE_KEY = "product-catalog-cart";
-
-const getInitialCartState = (): string[] => {
-  if (typeof window === "undefined") {
-    return [];
-  }
-
-  try {
-    const storedValue = window.localStorage.getItem(CART_STORAGE_KEY);
-
-    if (!storedValue) {
-      return [];
-    }
-
-    const parsedValue: unknown = JSON.parse(storedValue);
-
-    if (!Array.isArray(parsedValue)) {
-      return [];
-    }
-
-    return parsedValue.filter((value): value is string => typeof value === "string");
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
 export const CatalogPage = () => {
   const { products, isLoading, error } = useProducts();
+  const { addedProductIds, toggleCart, isInCart } = useCart();
 
   const [searchValue, setSearchValue] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [currentPage, setCurrentPage] = useState(1);
-
-  const [addedProductIds, setAddedProductIds] = useState<string[]>(getInitialCartState);
   const [toastMessage, setToastMessage] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
 
@@ -85,10 +58,6 @@ export const CatalogPage = () => {
     return () => window.clearTimeout(timeoutId);
   }, [isToastVisible, toastMessage]);
 
-  useEffect(() => {
-    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(addedProductIds));
-  }, [addedProductIds]);
-
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
     setCurrentPage(1);
@@ -100,13 +69,13 @@ export const CatalogPage = () => {
   };
 
   const handleToggleCart = (product: Product) => {
-    const isAlreadyAdded = addedProductIds.includes(product.id);
+    const isAlreadyAdded = isInCart(product.id);
 
-    setAddedProductIds((prev) =>
-      isAlreadyAdded ? prev.filter((productId) => productId !== product.id) : [...prev, product.id],
-    );
+    toggleCart(product);
     setToastMessage(
-      isAlreadyAdded ? `Товар "${product.title}" удален из корзины` : `Товар "${product.title}" добавлен в корзину`,
+      isAlreadyAdded
+        ? `Товар "${product.title}" удален из корзины`
+        : `Товар "${product.title}" добавлен в корзину`,
     );
     setIsToastVisible(true);
   };
