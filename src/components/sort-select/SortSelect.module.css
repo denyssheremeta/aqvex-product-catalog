@@ -1,11 +1,23 @@
+.wrapper {
+  display: flex;
+}
+
 .select {
-  height: 42px;
-  min-width: 220px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 12px;
-  background: #fff;
-  color: var(--text-main);
-  font-size: 14px;
+  height: 32px;
+  border: none;
+  padding: 5px;
   outline: none;
+
+  background: #fff;
+  color: var(--text-primary);
+
+  font-size: 16px;
+  font-weight: 500;
+
+  line-height: 100%;
+  letter-spacing: -2%;
+}
+
+.select:hover {
+  cursor: pointer;
 }

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./ProductCard.module.css";
 import type { Product } from "../../types/product";
 import { RatingStars } from "../rating-stars/RatingStars";
 import { getDiscountPercent } from "../../utils/getDiscountPercent";
 import { formatPrice } from "../../utils/formatPrice";
 import { getProductPath } from "../../utils/getProductPath";
 import { ProductImage } from "../product-image/ProductImage";
+import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
   product: Product;
@@ -38,15 +38,11 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
       </Link>
 
       <div className={styles.priceRow}>
-        {product.oldPrice ? (
-          <span className={styles.oldPrice}>{formatPrice(product.oldPrice, product.currency)}</span>
-        ) : (
-          <span />
-        )}
+        {product.oldPrice ? <span className={styles.oldPrice}>{product.oldPrice}</span> : <span />}
 
         <span className={styles.currentPrice}>{formatPrice(product.price, product.currency)}</span>
 
-        {discount > 0 && <span className={styles.discount}>-{discount}%</span>}
+        {discount > 0 && <span className={styles.discount}>{discount}%</span>}
       </div>
 
       <h3 className={styles.title}>{product.title}</h3>
@@ -58,11 +54,18 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
 
       <div className={styles.metaRow}>
         <span className={styles.stock}>
-          <span className={styles.stockDot} />
+          <img
+            className={`${styles.stockDot} ${!product.isAvailable ? styles.stockDotGray : ""}`}
+            src="/icons/check.svg"
+            alt=""
+            aria-hidden="true"
+          />
           {product.isAvailable ? "В наличии" : "Нет в наличии"}
         </span>
 
-        <span className={styles.delivery}>{product.category}</span>
+        <img src="/icons/blob.svg" alt="" aria-hidden="true" />
+
+        <span className={styles.category}>{product.category}</span>
       </div>
 
       <div className={styles.actionsRow}>

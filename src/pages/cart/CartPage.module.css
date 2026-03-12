@@ -1,5 +1,5 @@
 .page {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
   padding-bottom: 40px;
 }
 
@@ -28,7 +28,7 @@
 
 .subtitle {
   margin: 12px 0 0;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .backLink {
@@ -95,7 +95,7 @@
 .category {
   display: inline-block;
   margin-bottom: 10px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
@@ -106,7 +106,7 @@
 
 .stock {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .meta {
@@ -116,7 +116,7 @@
 }
 
 .oldPrice {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-decoration: line-through;
 }
 

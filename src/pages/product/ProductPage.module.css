@@ -1,13 +1,19 @@
 .page {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - calc(var(--header-height) + var(--footer-height)));
   padding-bottom: 40px;
 }
 
 .backLink {
   display: inline-flex;
   margin-bottom: 24px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-weight: 600;
+}
+
+.backLinkArrow {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
 }
 
 .card {
@@ -43,7 +49,7 @@
 }
 
 .category {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -63,7 +69,7 @@
 .reviewCount,
 .stock,
 .volumeLabel {
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .priceRow {

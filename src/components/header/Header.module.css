@@ -1,5 +1,6 @@
 .header {
-  padding: 24px 0 12px;
+  padding: 30px 0;
+  min-height: var(--header-height);
 }
 
 .inner {
@@ -10,7 +11,7 @@
 }
 
 .logo {
-  height: 42px;
+  height: 32px;
   width: auto;
   object-fit: contain;
 }
@@ -20,9 +21,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  border: 1px solid rgba(16, 24, 40, 0.1);
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--border);
   border-radius: 16px;
   background: #fff;
   cursor: pointer;
@@ -51,7 +52,7 @@
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
-  border-radius: 999px;
+  border-radius: 100%;
   background: #101828;
   color: #fff;
   font-size: 12px;

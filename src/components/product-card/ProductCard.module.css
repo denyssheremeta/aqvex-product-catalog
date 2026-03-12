@@ -1,7 +1,12 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
+
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -2%;
+  vertical-align: middle;
 }
 
 .imageLink {
@@ -9,7 +14,7 @@
 }
 
 .imageWrap {
-  height: 260px;
+  height: 347px;
   background: #f2f4f7;
   border-radius: 16px;
   display: flex;
@@ -20,45 +25,69 @@
 
 .image {
   max-width: 100%;
-  max-height: 220px;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.imageWrap:hover .image {
+  transform: scale(1.1);
 }
 
 .priceRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   min-height: 24px;
 }
 
 .oldPrice {
-  font-size: 14px;
-  color: #d56076;
-  text-decoration: line-through;
+  position: relative;
+  font-size: 22px;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.oldPrice::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--system-red);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .currentPrice {
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1;
-  font-weight: 700;
-  color: var(--primary);
+  color: transparent;
+
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .discount {
-  background: #ff5f7a;
+  position: relative;
   color: #fff;
-  font-size: 11px;
+  line-height: 1;
+  font-size: 14px;
   font-weight: 700;
-  padding: 3px 6px;
-  border-radius: 999px;
+  padding: 3px 3px 3px 12px;
+  background: url("/icons/discount-tag.svg") no-repeat center / contain;
 }
 
 .title {
   min-height: 60px;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 18px;
+
+  line-height: 140%;
+
   font-weight: 500;
-  color: var(--text-main);
+  color: var(--text-primary);
+  vertical-align: middle;
 }
 
 .ratingRow {
@@ -68,35 +97,35 @@
 }
 
 .reviewCount {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 12px;
 }
 
 .metaRow {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  gap: 20px;
 }
 
 .stock {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #1d8b50;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .stockDot {
-  width: 8px;
-  height: 8px;
-  background: #1db55f;
-  border-radius: 50%;
+  width: 16px;
+  height: 16px;
 }
 
-.delivery {
-  font-size: 12px;
-  color: var(--text-muted);
+.stockDotGray {
+  filter: grayscale(100%);
+}
+
+.category {
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .actionsRow {
@@ -113,7 +142,7 @@
   border-radius: 10px;
   background: #fff;
   padding: 0 10px;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 .cartButton {
@@ -149,6 +178,6 @@
 }
 
 .buttonIcon {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
 }

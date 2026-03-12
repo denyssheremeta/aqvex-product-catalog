@@ -1,5 +1,4 @@
 const PRODUCT_IMAGE_PLACEHOLDER = "/images/product-placeholder.svg";
-
 const ABSOLUTE_URL_PATTERN = /^(?:[a-z]+:)?\/\//i;
 
 export const getProductImageSrc = (image: string | null | undefined): string => {

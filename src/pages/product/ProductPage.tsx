@@ -71,7 +71,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     <main className={styles.page}>
       <div className="container">
         <Link className={styles.backLink} to="/">
-          ← Назад в каталог
+          <img className={styles.backLinkArrow} src="/icons/arrow-left.svg" alt="" aria-hidden="true" /> Назад в каталог
         </Link>
 
         <section className={styles.card}>

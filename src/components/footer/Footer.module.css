@@ -1,5 +1,6 @@
 .footer {
-  padding: 32px 0 40px;
+  padding: 20px 0;
+  min-height: var(--footer-height);
 }
 
 .inner {
@@ -7,13 +8,49 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  color: var(--text-muted);
-  font-size: 13px;
+  color: var(--text-secondary);
+  min-height: 40px;
+}
+
+.copyright {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.copyrightImages {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.copyrightImages img {
+  height: 40px;
+}
+
+.copyrightText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -2%;
+}
+
+.paymentMethods {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  height: 34px;
+}
+
+.paymentMethods img {
+  height: 34px;
 }
 
 @media (max-width: 768px) {
   .inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: start;
   }
 }

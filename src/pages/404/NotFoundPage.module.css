@@ -27,14 +27,14 @@
 
 .title {
   margin: 0 0 16px;
-  color: var(--text-main);
+  color: var(--text-primary);
   font-size: clamp(28px, 5vw, 40px);
   line-height: 1.1;
 }
 
 .description {
   margin: 0 0 28px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -47,7 +47,7 @@
   min-height: 48px;
   padding: 0 24px;
   border-radius: 999px;
-  background: var(--text-main);
+  background: var(--text-primary);
   color: #fff;
   text-decoration: none;
   transition:
