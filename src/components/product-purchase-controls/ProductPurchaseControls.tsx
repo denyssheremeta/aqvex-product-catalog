@@ -28,7 +28,7 @@ export const ProductPurchaseControls = ({
       {hasVolumeOptions ? (
         isPageVariant ? (
           <label className={styles.volumeBlock}>
-            <span className={styles.volumeLabel}>Обьем</span>
+            <span className={styles.volumeLabel}>Объем</span>
             <select
               className={`${styles.volumeSelect} ${styles.volumeSelectPage}`}
               value={selectedVolumeId}
