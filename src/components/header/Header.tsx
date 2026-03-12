@@ -8,13 +8,15 @@ export const Header = () => {
     <header className={styles.header}>
       <div className="container">
         <div className={styles.inner}>
-          <img className={styles.logo} src="/logo.svg" alt="AQVEX" />
-          <button className={styles.cartButton} type="button" aria-label={`Корзина, ${cartCount} товарів`}>
+          <a href="#/" aria-label="Перейти в каталог">
+            <img className={styles.logo} src="/logo.svg" alt="AQVEX" />
+          </a>
+          <a className={styles.cartButton} href="#/cart" aria-label={`Корзина, ${cartCount} товарів`}>
             <span className={styles.cartBadge} aria-hidden="true">
               {cartCount}
             </span>
             <img className={styles.cartIcon} src="/icons/cart.svg" alt="" aria-hidden="true" />
-          </button>
+          </a>
         </div>
       </div>
     </header>

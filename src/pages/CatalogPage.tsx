@@ -10,7 +10,6 @@ import { Loader } from "../components/ui/Loader";
 import { ErrorState } from "../components/ui/ErrorState";
 import { EmptyState } from "../components/ui/EmptyState";
 import { useCart } from "../hooks/useCart";
-import { useProducts } from "../hooks/useProducts";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { PRODUCTS_PER_PAGE } from "../constants/pagination";
 import { sortProducts } from "../utils/sortProducts";
@@ -18,8 +17,13 @@ import { paginate } from "../utils/paginate";
 import type { SortOption } from "../constants/sortOptions";
 import type { Product } from "../types/product";
 
-export const CatalogPage = () => {
-  const { products, isLoading, error } = useProducts();
+interface CatalogPageProps {
+  products: Product[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) => {
   const { addedProductIds, toggleCart, isInCart } = useCart();
 
   const [searchValue, setSearchValue] = useState("");
@@ -73,9 +77,7 @@ export const CatalogPage = () => {
 
     toggleCart(product);
     setToastMessage(
-      isAlreadyAdded
-        ? `Товар "${product.title}" удален из корзины`
-        : `Товар "${product.title}" добавлен в корзину`,
+      isAlreadyAdded ? `Товар "${product.title}" удален из корзины` : `Товар "${product.title}" добавлен в корзину`,
     );
     setIsToastVisible(true);
   };
@@ -86,7 +88,7 @@ export const CatalogPage = () => {
 
       <main className={styles.page}>
         <div className="container">
-          <h1 className="srOnly">Каталог товаров для ухода за авто</h1>
+          <h1 className="srOnly">AQVEX - Каталог товаров для ухода за авто</h1>
 
           {isLoading ? (
             <div className={styles.contentState}>
