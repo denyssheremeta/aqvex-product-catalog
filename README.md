@@ -2,6 +2,10 @@
 
 A frontend app for browsing the product catalog and viewing individual product pages.
 
+## Link to preview
+
+[Open AQVEX product catalog](https://aqvex-product-catalog.vercel.app/)
+
 ## Stack
 
 - React 19
