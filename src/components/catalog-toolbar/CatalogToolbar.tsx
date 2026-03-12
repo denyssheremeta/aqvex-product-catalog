@@ -21,7 +21,7 @@ export const CatalogToolbar = ({
   return (
     <section className={styles.toolbar} aria-label="Инструменты каталога">
       <p className={styles.count}>
-        {totalCount} {totalCount > 1 ? "товаров" : "товар"}
+        {totalCount} {totalCount === 1 ? "товар" : "товаров"}
       </p>
 
       <div className={styles.controls}>

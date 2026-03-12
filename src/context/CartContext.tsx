@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Product } from "../types/product";
+import { useToast } from "../hooks/useToast";
 import { CartContext, type CartContextValue, type CartItem } from "./cart-context";
 
 const CART_STORAGE_KEY = "product-catalog-cart";
@@ -52,6 +53,7 @@ const getInitialCartState = (): CartItem[] => {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(getInitialCartState);
+  const { showToast } = useToast();
 
   useEffect(() => {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
@@ -65,15 +67,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       cartItems,
       cartCount: cartItems.length,
       toggleCart: (product: Product, selectedVolumeId = product.selectedVolumeId) => {
+        const hasItem = cartItems.some(
+          (item) => item.productId === product.id && item.selectedVolumeId === selectedVolumeId,
+        );
+
         setCartItems((prev) =>
-          prev.some((item) => item.productId === product.id && item.selectedVolumeId === selectedVolumeId)
+          hasItem
             ? prev.filter((item) => !(item.productId === product.id && item.selectedVolumeId === selectedVolumeId))
             : [...prev, { productId: product.id, selectedVolumeId }],
+        );
+
+        showToast(
+          hasItem ? `Товар "${product.title}" удален из корзины` : `Товар "${product.title}" добавлен в корзину`,
         );
       },
       isInCart,
     };
-  }, [cartItems]);
+  }, [cartItems, showToast]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

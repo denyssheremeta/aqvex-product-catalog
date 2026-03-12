@@ -84,6 +84,10 @@
   background: #f6f7f9;
 }
 
+.imageLink {
+  display: inline-flex;
+}
+
 .info {
   min-width: 0;
 }

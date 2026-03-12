@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import type { Product } from "../../types/product";
+import { RatingStars } from "../rating-stars/RatingStars";
 import { getDiscountPercent } from "../../utils/getDiscountPercent";
 import { formatPrice } from "../../utils/formatPrice";
+import { getProductPath } from "../../utils/getProductPath";
 
 interface ProductCardProps {
   product: Product;
@@ -28,9 +31,11 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
 
   return (
     <article className={styles.card}>
-      <div className={styles.imageWrap}>
-        <img className={styles.image} src={product.image} alt={product.title} />
-      </div>
+      <Link className={styles.imageLink} to={getProductPath(product.slug)} aria-label={`Открыть ${product.title}`}>
+        <div className={styles.imageWrap}>
+          <img className={styles.image} src={product.image} alt={product.title} />
+        </div>
+      </Link>
 
       <div className={styles.priceRow}>
         {product.oldPrice ? (
@@ -47,7 +52,7 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
       <h3 className={styles.title}>{product.title}</h3>
 
       <div className={styles.ratingRow}>
-        <span className={styles.stars}>★★★★★</span>
+        <RatingStars rating={product.rating} />
         <span className={styles.reviewCount}>{product.reviewCount}</span>
       </div>
 

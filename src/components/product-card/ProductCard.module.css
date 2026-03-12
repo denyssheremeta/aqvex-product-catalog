@@ -4,6 +4,10 @@
   gap: 10px;
 }
 
+.imageLink {
+  display: block;
+}
+
 .imageWrap {
   height: 260px;
   background: #f2f4f7;
@@ -61,12 +65,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.stars {
-  color: #4f8df7;
-  font-size: 12px;
-  letter-spacing: 1px;
 }
 
 .reviewCount {

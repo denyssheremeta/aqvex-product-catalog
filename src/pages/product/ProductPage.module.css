@@ -1,0 +1,147 @@
+.page {
+  min-height: calc(100vh - 160px);
+  padding-bottom: 40px;
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: 24px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(280px, 520px) minmax(0, 1fr);
+  gap: 32px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(16, 24, 40, 0.05);
+}
+
+.media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 24px;
+  background: #f6f7f9;
+}
+
+.image {
+  width: 100%;
+  max-width: 420px;
+  object-fit: contain;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.category {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingValue,
+.reviewCount,
+.stock,
+.volumeLabel {
+  color: var(--text-muted);
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.oldPrice {
+  color: #d56076;
+  text-decoration: line-through;
+}
+
+.currentPrice {
+  color: var(--primary);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.discount {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ff5f7a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.volumeBlock {
+  display: grid;
+  gap: 8px;
+}
+
+.volumeSelect {
+  width: min(240px, 100%);
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.cartButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  width: min(240px, 100%);
+  border: 0;
+  border-radius: 14px;
+  background: #dfeeff;
+  color: #17324f;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cartButtonAdded {
+  background: #d9f6e5;
+  color: #16643a;
+}
+
+.cartButton:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+}
