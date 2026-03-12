@@ -18,6 +18,25 @@
   font-size: 14px;
 }
 
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.ellipsis {
+  width: 36px;
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 36px;
+  text-align: center;
+}
+
 .active {
   border-color: #78adfb;
   background: #fff;

@@ -9,6 +9,13 @@ const api = axios.create({
 export const getProducts = async (): Promise<Product[]> => {
   const response = await api.get<ProductsApiResponse>("/products");
   const items = response.data.data.products ?? [];
+  const normalizedProducts = normalizeProducts(items);
 
-  return normalizeProducts(items);
+  return Array.from({ length: 3 }, (_, copyIndex) =>
+    normalizedProducts.map((product) => ({
+      ...product,
+      id: `${product.id}-${copyIndex + 1}`,
+      slug: `${product.slug}-${copyIndex + 1}`,
+    })),
+  ).flat();
 };

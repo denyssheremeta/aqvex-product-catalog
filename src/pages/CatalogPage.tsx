@@ -47,10 +47,11 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
   }, [filteredProducts, sortBy]);
 
   const totalPages = Math.ceil(sortedProducts.length / PRODUCTS_PER_PAGE);
+  const resolvedCurrentPage = totalPages > 0 ? Math.min(currentPage, totalPages) : 1;
 
   const currentProducts = useMemo(() => {
-    return paginate(sortedProducts, currentPage, PRODUCTS_PER_PAGE);
-  }, [sortedProducts, currentPage]);
+    return paginate(sortedProducts, resolvedCurrentPage, PRODUCTS_PER_PAGE);
+  }, [resolvedCurrentPage, sortedProducts]);
 
   useEffect(() => {
     if (!isToastVisible) return;
@@ -70,6 +71,13 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
   const handleSortChange = (value: SortOption) => {
     setSortBy(value);
     setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    const nextPage = Math.min(Math.max(page, 1), Math.max(totalPages, 1));
+
+    setCurrentPage(nextPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleToggleCart = (product: Product) => {
@@ -114,13 +122,13 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
                 </div>
               ) : (
                 <>
-                  <ProductGrid
-                    products={currentProducts}
-                    addedProductIds={addedProductIds}
-                    onToggleCart={handleToggleCart}
-                  />
+                  <ProductGrid products={currentProducts} addedProductIds={addedProductIds} onToggleCart={handleToggleCart} />
 
-                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                  <Pagination
+                    currentPage={resolvedCurrentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
                 </>
               )}
             </>
