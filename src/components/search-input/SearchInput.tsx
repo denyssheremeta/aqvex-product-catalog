@@ -8,10 +8,14 @@ interface SearchInputProps {
 export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   return (
     <div className={styles.wrapper}>
+      <label className="srOnly" htmlFor="catalog-search">
+        Поиск товаров
+      </label>
       <img className={styles.icon} src="/icons/search.svg" alt="" aria-hidden="true" />
       <input
+        id="catalog-search"
         className={styles.input}
-        type="text"
+        type="search"
         placeholder="Поиск"
         value={value}
         onChange={(event) => onChange(event.target.value)}

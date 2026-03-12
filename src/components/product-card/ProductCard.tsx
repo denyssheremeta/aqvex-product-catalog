@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./ProductCard.module.css";
 import type { Product } from "../../types/product";
 import { getDiscountPercent } from "../../utils/getDiscountPercent";
@@ -7,24 +7,23 @@ import { formatPrice } from "../../utils/formatPrice";
 interface ProductCardProps {
   product: Product;
   isAdded: boolean;
-  onAddToCart: (product: Product) => void;
+  onToggleCart: (product: Product) => void;
 }
 
-export const ProductCard = ({ product, isAdded, onAddToCart }: ProductCardProps) => {
+export const ProductCard = ({ product, isAdded, onToggleCart }: ProductCardProps) => {
   const [selectedVolumeId, setSelectedVolumeId] = useState(product.selectedVolumeId);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSelectedVolumeId(product.selectedVolumeId);
-  }, [product.selectedVolumeId]);
+  const resolvedSelectedVolumeId = product.volumes.some((volume) => volume.id === selectedVolumeId)
+    ? selectedVolumeId
+    : product.selectedVolumeId;
 
   const selectedVolume = useMemo(() => {
-    return product.volumes.find((volume) => volume.id === selectedVolumeId) ?? product.volumes[0] ?? null;
-  }, [product.volumes, selectedVolumeId]);
+    return product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
+  }, [product.volumes, resolvedSelectedVolumeId]);
 
   const discount = getDiscountPercent(product.oldPrice, product.price, product.discountPercent);
-
-  const isButtonDisabled = isAdded || !product.isAvailable || (selectedVolume ? !selectedVolume.in_stock : false);
+  const hasVolumeOptions = product.volumes.length > 1;
+  const isButtonDisabled = !product.isAvailable || (selectedVolume ? !selectedVolume.in_stock : false);
 
   return (
     <article className={styles.card}>
@@ -61,23 +60,26 @@ export const ProductCard = ({ product, isAdded, onAddToCart }: ProductCardProps)
       </div>
 
       <div className={styles.actionsRow}>
-        <select
-          className={styles.volumeSelect}
-          value={selectedVolumeId}
-          onChange={(event) => setSelectedVolumeId(event.target.value)}
-        >
-          {product.volumes.map((volume) => (
-            <option key={volume.id} value={volume.id} disabled={!volume.in_stock}>
-              {volume.label}
-            </option>
-          ))}
-        </select>
+        {hasVolumeOptions && (
+          <select
+            className={styles.volumeSelect}
+            value={resolvedSelectedVolumeId}
+            onChange={(event) => setSelectedVolumeId(event.target.value)}
+          >
+            {product.volumes.map((volume) => (
+              <option key={volume.id} value={volume.id} disabled={!volume.in_stock}>
+                {volume.label}
+              </option>
+            ))}
+          </select>
+        )}
 
         <button
           className={`${styles.cartButton} ${isAdded ? styles.cartButtonAdded : ""}`}
           type="button"
-          onClick={() => onAddToCart(product)}
+          onClick={() => onToggleCart(product)}
           disabled={isButtonDisabled}
+          aria-pressed={isAdded}
         >
           <img
             className={styles.buttonIcon}

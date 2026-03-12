@@ -3,7 +3,7 @@ import type { Product, ProductsApiResponse } from "../types/product";
 import { normalizeProducts } from "../utils/normalizeProducts";
 
 const api = axios.create({
-  baseURL: "https://ip-194-99-21-145-139178.vps.hosted-by-mvps.net/api/v1",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const getProducts = async (): Promise<Product[]> => {

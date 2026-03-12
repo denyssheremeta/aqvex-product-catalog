@@ -12,12 +12,13 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }: Pagination
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <nav className={styles.pagination} aria-label="Pagination">
+    <nav className={styles.pagination} aria-label="Пагинация каталога">
       <button
         className={styles.arrow}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         type="button"
+        aria-label="Предыдущая страница"
       >
         ←
       </button>
@@ -29,6 +30,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }: Pagination
           onClick={() => onPageChange(page)}
           type="button"
           aria-current={page === currentPage ? "page" : undefined}
+          aria-label={`Страница ${page}`}
         >
           {page}
         </button>
@@ -39,6 +41,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }: Pagination
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         type="button"
+        aria-label="Следующая страница"
       >
         →
       </button>

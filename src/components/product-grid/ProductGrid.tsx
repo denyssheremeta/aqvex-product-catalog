@@ -5,20 +5,23 @@ import { ProductCard } from "../product-card/ProductCard";
 interface ProductGridProps {
   products: Product[];
   addedProductIds: string[];
-  onAddToCart: (product: Product) => void;
+  onToggleCart: (product: Product) => void;
 }
 
-export const ProductGrid = ({ products, addedProductIds, onAddToCart }: ProductGridProps) => {
+export const ProductGrid = ({ products, addedProductIds, onToggleCart }: ProductGridProps) => {
   return (
-    <section className={styles.grid}>
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          isAdded={addedProductIds.includes(product.id)}
-          onAddToCart={onAddToCart}
-        />
-      ))}
+    <section aria-label="Список товаров">
+      <ul className={styles.grid}>
+        {products.map((product) => (
+          <li key={product.id} className={styles.item}>
+            <ProductCard
+              product={product}
+              isAdded={addedProductIds.includes(product.id)}
+              onToggleCart={onToggleCart}
+            />
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

@@ -8,12 +8,22 @@ interface SortSelectProps {
 
 export const SortSelect = ({ value, onChange }: SortSelectProps) => {
   return (
-    <select className={styles.select} value={value} onChange={(event) => onChange(event.target.value as SortOption)}>
-      {SORT_OPTIONS.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <>
+      <label className="srOnly" htmlFor="catalog-sort">
+        Сортировка товаров
+      </label>
+      <select
+        id="catalog-sort"
+        className={styles.select}
+        value={value}
+        onChange={(event) => onChange(event.target.value as SortOption)}
+      >
+        {SORT_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </>
   );
 };

@@ -19,10 +19,10 @@ export const CatalogToolbar = ({
   onSortChange,
 }: CatalogToolbarProps) => {
   return (
-    <section className={styles.toolbar}>
-      <div className={styles.count}>
+    <section className={styles.toolbar} aria-label="Инструменты каталога">
+      <p className={styles.count}>
         {totalCount} {totalCount > 1 ? "товаров" : "товар"}
-      </div>
+      </p>
 
       <div className={styles.controls}>
         <SearchInput value={searchValue} onChange={onSearchChange} />

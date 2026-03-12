@@ -17,6 +17,33 @@ import { paginate } from "../utils/paginate";
 import type { SortOption } from "../constants/sortOptions";
 import type { Product } from "../types/product";
 
+const CART_STORAGE_KEY = "product-catalog-cart";
+
+const getInitialCartState = (): string[] => {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const storedValue = window.localStorage.getItem(CART_STORAGE_KEY);
+
+    if (!storedValue) {
+      return [];
+    }
+
+    const parsedValue: unknown = JSON.parse(storedValue);
+
+    if (!Array.isArray(parsedValue)) {
+      return [];
+    }
+
+    return parsedValue.filter((value): value is string => typeof value === "string");
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 export const CatalogPage = () => {
   const { products, isLoading, error } = useProducts();
 
@@ -24,7 +51,7 @@ export const CatalogPage = () => {
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
+  const [addedProductIds, setAddedProductIds] = useState<string[]>(getInitialCartState);
   const [toastMessage, setToastMessage] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
 
@@ -49,11 +76,6 @@ export const CatalogPage = () => {
   }, [sortedProducts, currentPage]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCurrentPage(1);
-  }, [debouncedSearch, sortBy]);
-
-  useEffect(() => {
     if (!isToastVisible) return;
 
     const timeoutId = window.setTimeout(() => {
@@ -61,28 +83,33 @@ export const CatalogPage = () => {
     }, 2500);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isToastVisible]);
+  }, [isToastVisible, toastMessage]);
 
-  const handleAddToCart = (product: Product) => {
-    setAddedProductIds((prev) => {
-      if (prev.includes(product.id)) {
-        return prev;
-      }
+  useEffect(() => {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(addedProductIds));
+  }, [addedProductIds]);
 
-      return [...prev, product.id];
-    });
-
-    setToastMessage(`Товар "${product.title}" добавлен в корзину`);
-    setIsToastVisible(true);
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    setCurrentPage(1);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const handleSortChange = (value: SortOption) => {
+    setSortBy(value);
+    setCurrentPage(1);
+  };
 
-  if (error) {
-    return <ErrorState message={error} />;
-  }
+  const handleToggleCart = (product: Product) => {
+    const isAlreadyAdded = addedProductIds.includes(product.id);
+
+    setAddedProductIds((prev) =>
+      isAlreadyAdded ? prev.filter((productId) => productId !== product.id) : [...prev, product.id],
+    );
+    setToastMessage(
+      isAlreadyAdded ? `Товар "${product.title}" удален из корзины` : `Товар "${product.title}" добавлен в корзину`,
+    );
+    setIsToastVisible(true);
+  };
 
   return (
     <>
@@ -90,21 +117,41 @@ export const CatalogPage = () => {
 
       <main className={styles.page}>
         <div className="container">
-          <CatalogToolbar
-            totalCount={filteredProducts.length}
-            searchValue={searchValue}
-            onSearchChange={setSearchValue}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-          />
+          <h1 className="srOnly">Каталог товаров для ухода за авто</h1>
 
-          {filteredProducts.length === 0 ? (
-            <EmptyState message="По вашему запросу товары не найдены" />
+          {isLoading ? (
+            <div className={styles.contentState}>
+              <Loader count={PRODUCTS_PER_PAGE} />
+            </div>
+          ) : error ? (
+            <div className={styles.contentState}>
+              <ErrorState message={error} />
+            </div>
           ) : (
             <>
-              <ProductGrid products={currentProducts} addedProductIds={addedProductIds} onAddToCart={handleAddToCart} />
+              <CatalogToolbar
+                totalCount={filteredProducts.length}
+                searchValue={searchValue}
+                onSearchChange={handleSearchChange}
+                sortBy={sortBy}
+                onSortChange={handleSortChange}
+              />
 
-              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+              {filteredProducts.length === 0 ? (
+                <div className={styles.contentState}>
+                  <EmptyState message="По вашему запросу товары не найдены" />
+                </div>
+              ) : (
+                <>
+                  <ProductGrid
+                    products={currentProducts}
+                    addedProductIds={addedProductIds}
+                    onToggleCart={handleToggleCart}
+                  />
+
+                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                </>
+              )}
             </>
           )}
         </div>

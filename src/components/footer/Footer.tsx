@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.inner}>
-          <div>AQVEX © 2026 | Все права защищены</div>
+          <small>AQVEX © 2026 | Все права защищены</small>
           <div>Mastercard · Visa · Apple Pay · G Pay</div>
         </div>
       </div>
