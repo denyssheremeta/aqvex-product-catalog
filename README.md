@@ -43,4 +43,4 @@ npm run lint
 
 ## Environment
 
-- `VITE_API_URL` - base API URL
+- `VITE_API_URL` - base API URL, use `/api/v1` for Vercel/Vite proxy routing
