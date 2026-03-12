@@ -1,0 +1,84 @@
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.actionsRowPage {
+  align-items: end;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.volumeBlock {
+  display: grid;
+  gap: 8px;
+}
+
+.volumeLabel {
+  color: var(--text-secondary);
+}
+
+.volumeSelect {
+  height: 38px;
+  min-width: 90px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+.volumeSelectPage {
+  width: min(240px, 100%);
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.cartButton {
+  flex: 1;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: #dfeeff;
+  color: #17324f;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cartButtonPage {
+  flex: 0 1 240px;
+  min-height: 46px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cartButton:hover:not(:disabled) {
+  background: #cfe5ff;
+}
+
+.cartButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.cartButtonAdded {
+  background: #d9f6e5;
+  color: #16643a;
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+}

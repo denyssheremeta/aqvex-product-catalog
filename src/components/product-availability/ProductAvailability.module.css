@@ -1,0 +1,21 @@
+.stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.stockDot {
+  width: 16px;
+  height: 16px;
+}
+
+.stockDotGray {
+  filter: grayscale(100%);
+}
+
+.stockText {
+  margin: 0;
+  color: var(--text-secondary);
+}

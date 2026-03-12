@@ -1,0 +1,58 @@
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 24px;
+  flex-wrap: wrap;
+}
+
+.priceRowPage {
+  gap: 10px;
+}
+
+.placeholder {
+  min-width: 1px;
+}
+
+.oldPrice {
+  position: relative;
+  font-size: 22px;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.oldPrice::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--system-red);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.currentPrice {
+  font-size: 22px;
+  line-height: 1;
+  color: transparent;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.currentPricePage {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.discount {
+  position: relative;
+  color: #fff;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 3px 3px 3px 12px;
+  background: url("/icons/discount-tag.svg") no-repeat center / contain;
+}

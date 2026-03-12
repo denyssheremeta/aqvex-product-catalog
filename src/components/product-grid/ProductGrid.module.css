@@ -9,6 +9,7 @@
 
 .item {
   min-width: 0;
+  display: flex;
 }
 
 @media (max-width: 1100px) {

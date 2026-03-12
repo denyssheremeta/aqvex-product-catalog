@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import styles from "./ProductPage.module.css";
-import { RatingStars } from "../../components/rating-stars/RatingStars";
-import { Loader } from "../../components/ui/Loader";
-import { ErrorState } from "../../components/ui/ErrorState";
-import { useCart } from "../../hooks/useCart";
-import { formatPrice } from "../../utils/formatPrice";
-import { getDiscountPercent } from "../../utils/getDiscountPercent";
-import { NotFoundPage } from "../404/NotFoundPage";
-import type { Product } from "../../types/product";
+import { ProductAvailability } from "../../components/product-availability/ProductAvailability";
 import { ProductImage } from "../../components/product-image/ProductImage";
+import { ProductPrice } from "../../components/product-price/ProductPrice";
+import { ProductPurchaseControls } from "../../components/product-purchase-controls/ProductPurchaseControls";
+import { RatingStars } from "../../components/rating-stars/RatingStars";
+import { ErrorState } from "../../components/ui/ErrorState";
+import { Loader } from "../../components/ui/Loader";
+import { useCart } from "../../hooks/useCart";
+import type { Product } from "../../types/product";
+import { NotFoundPage } from "../404/NotFoundPage";
+import styles from "./ProductPage.module.css";
 
 interface ProductPageProps {
   products: Product[];
@@ -64,7 +65,6 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
 
   const isAdded = isInCart(product.id, resolvedSelectedVolumeId);
-  const discount = getDiscountPercent(product.oldPrice, product.price, product.discountPercent);
   const isButtonDisabled = !product.isAvailable || (selectedVolume ? !selectedVolume.in_stock : false);
 
   return (
@@ -86,50 +86,21 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <div className={styles.ratingRow}>
               <RatingStars rating={product.rating} />
               <span className={styles.ratingValue}>{product.rating.toFixed(1)}</span>
-              <span className={styles.reviewCount}>{product.reviewCount} отзывов</span>
+              <span className={styles.reviewCount}>{product.reviewCount} відгуків</span>
             </div>
 
-            <div className={styles.priceRow}>
-              {product.oldPrice ? (
-                <span className={styles.oldPrice}>{formatPrice(product.oldPrice, product.currency)}</span>
-              ) : null}
-              <span className={styles.currentPrice}>{formatPrice(product.price, product.currency)}</span>
-              {discount > 0 ? <span className={styles.discount}>-{discount}%</span> : null}
-            </div>
+            <ProductPrice product={product} variant="page" />
+            <ProductAvailability isAvailable={product.isAvailable} variant="page" />
 
-            <p className={styles.stock}>{product.isAvailable ? "В наличии" : "Нет в наличии"}</p>
-
-            {product.volumes.length > 1 ? (
-              <label className={styles.volumeBlock}>
-                <span className={styles.volumeLabel}>Объем</span>
-                <select
-                  className={styles.volumeSelect}
-                  value={resolvedSelectedVolumeId}
-                  onChange={(event) => setSelectedVolumeId(event.target.value)}
-                >
-                  {product.volumes.map((volume) => (
-                    <option key={volume.id} value={volume.id} disabled={!volume.in_stock}>
-                      {volume.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
-
-            <button
-              className={`${styles.cartButton} ${isAdded ? styles.cartButtonAdded : ""}`}
-              type="button"
-              onClick={() => toggleCart(product, resolvedSelectedVolumeId)}
-              disabled={isButtonDisabled}
-            >
-              <img
-                className={styles.buttonIcon}
-                src={isAdded ? "/icons/check.svg" : "/icons/cart.svg"}
-                alt=""
-                aria-hidden="true"
-              />
-              {isAdded ? "В корзине" : "В корзину"}
-            </button>
+            <ProductPurchaseControls
+              product={product}
+              selectedVolumeId={resolvedSelectedVolumeId}
+              onSelectedVolumeIdChange={setSelectedVolumeId}
+              isAdded={isAdded}
+              isButtonDisabled={isButtonDisabled}
+              onToggleCart={() => toggleCart(product, resolvedSelectedVolumeId)}
+              variant="page"
+            />
           </div>
         </section>
       </div>

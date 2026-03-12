@@ -66,83 +66,8 @@
 }
 
 .ratingValue,
-.reviewCount,
-.stock,
-.volumeLabel {
+.reviewCount {
   color: var(--text-secondary);
-}
-
-.priceRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.oldPrice {
-  color: #d56076;
-  text-decoration: line-through;
-}
-
-.currentPrice {
-  color: var(--primary);
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.discount {
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: #ff5f7a;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.volumeBlock {
-  display: grid;
-  gap: 8px;
-}
-
-.volumeSelect {
-  width: min(240px, 100%);
-  height: 44px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #fff;
-}
-
-.cartButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 46px;
-  width: min(240px, 100%);
-  border: 0;
-  border-radius: 14px;
-  background: #dfeeff;
-  color: #17324f;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.cartButtonAdded {
-  background: #d9f6e5;
-  color: #16643a;
-}
-
-.cartButton:disabled {
-  opacity: 0.8;
-  cursor: not-allowed;
-}
-
-.buttonIcon {
-  width: 16px;
-  height: 16px;
 }
 
 @media (max-width: 900px) {
