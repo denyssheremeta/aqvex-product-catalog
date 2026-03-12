@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 import type { Product } from "../../types/product";
@@ -6,6 +6,7 @@ import { RatingStars } from "../rating-stars/RatingStars";
 import { getDiscountPercent } from "../../utils/getDiscountPercent";
 import { formatPrice } from "../../utils/formatPrice";
 import { getProductPath } from "../../utils/getProductPath";
+import { ProductImage } from "../product-image/ProductImage";
 
 interface ProductCardProps {
   product: Product;
@@ -20,9 +21,8 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
     ? selectedVolumeId
     : product.selectedVolumeId;
 
-  const selectedVolume = useMemo(() => {
-    return product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
-  }, [product.volumes, resolvedSelectedVolumeId]);
+  const selectedVolume =
+    product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
 
   const isAdded = isInCart(product.id, resolvedSelectedVolumeId);
   const discount = getDiscountPercent(product.oldPrice, product.price, product.discountPercent);
@@ -33,7 +33,7 @@ export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProp
     <article className={styles.card}>
       <Link className={styles.imageLink} to={getProductPath(product.slug)} aria-label={`Открыть ${product.title}`}>
         <div className={styles.imageWrap}>
-          <img className={styles.image} src={product.image} alt={product.title} />
+          <ProductImage className={styles.image} src={product.image} alt={product.title} />
         </div>
       </Link>
 

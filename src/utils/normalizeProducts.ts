@@ -1,11 +1,12 @@
 import type { Product, RawProduct } from "../types/product";
+import { getProductImageSrc } from "./getProductImageSrc";
 
 export const normalizeProducts = (items: RawProduct[]): Product[] => {
   return items.map((item) => ({
     id: item.id,
     slug: item.slug,
     title: item.name,
-    image: `/images/products/${item.image}`,
+    image: getProductImageSrc(item.image),
     price: item.price,
     oldPrice: item.old_price ?? null,
     discountPercent: item.discount_percent ?? 0,

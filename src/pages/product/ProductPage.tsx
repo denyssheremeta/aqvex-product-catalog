@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "./ProductPage.module.css";
 import { RatingStars } from "../../components/rating-stars/RatingStars";
@@ -9,6 +9,7 @@ import { formatPrice } from "../../utils/formatPrice";
 import { getDiscountPercent } from "../../utils/getDiscountPercent";
 import { NotFoundPage } from "../404/NotFoundPage";
 import type { Product } from "../../types/product";
+import { ProductImage } from "../../components/product-image/ProductImage";
 
 interface ProductPageProps {
   products: Product[];
@@ -18,30 +19,7 @@ interface ProductPageProps {
 
 export const ProductPage = ({ products, isLoading, error }: ProductPageProps) => {
   const { slug } = useParams();
-  const { isInCart, toggleCart } = useCart();
-  const product = useMemo(() => products.find((item) => item.slug === slug) ?? null, [products, slug]);
-  const [selectedVolumeId, setSelectedVolumeId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSelectedVolumeId(product?.selectedVolumeId ?? null);
-  }, [product?.id, product?.selectedVolumeId]);
-
-  const resolvedSelectedVolumeId = useMemo(() => {
-    if (!product) {
-      return "";
-    }
-
-    const initialValue = selectedVolumeId ?? product.selectedVolumeId;
-    return product.volumes.some((volume) => volume.id === initialValue) ? initialValue : product.selectedVolumeId;
-  }, [product, selectedVolumeId]);
-
-  const selectedVolume = useMemo(() => {
-    if (!product) {
-      return null;
-    }
-
-    return product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
-  }, [product, resolvedSelectedVolumeId]);
+  const product = products.find((item) => item.slug === slug) ?? null;
 
   if (isLoading) {
     return (
@@ -67,6 +45,24 @@ export const ProductPage = ({ products, isLoading, error }: ProductPageProps) =>
     return <NotFoundPage />;
   }
 
+  return <ProductDetails key={product.id} product={product} />;
+};
+
+interface ProductDetailsProps {
+  product: Product;
+}
+
+const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const { isInCart, toggleCart } = useCart();
+  const [selectedVolumeId, setSelectedVolumeId] = useState(product.selectedVolumeId);
+
+  const resolvedSelectedVolumeId = product.volumes.some((volume) => volume.id === selectedVolumeId)
+    ? selectedVolumeId
+    : product.selectedVolumeId;
+
+  const selectedVolume =
+    product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
+
   const isAdded = isInCart(product.id, resolvedSelectedVolumeId);
   const discount = getDiscountPercent(product.oldPrice, product.price, product.discountPercent);
   const isButtonDisabled = !product.isAvailable || (selectedVolume ? !selectedVolume.in_stock : false);
@@ -80,7 +76,7 @@ export const ProductPage = ({ products, isLoading, error }: ProductPageProps) =>
 
         <section className={styles.card}>
           <div className={styles.media}>
-            <img className={styles.image} src={product.image} alt={product.title} />
+            <ProductImage className={styles.image} src={product.image} alt={product.title} />
           </div>
 
           <div className={styles.content}>

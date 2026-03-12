@@ -7,6 +7,7 @@ import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../utils/formatPrice";
 import { getProductPath } from "../../utils/getProductPath";
 import type { Product } from "../../types/product";
+import { ProductImage } from "../../components/product-image/ProductImage";
 
 interface CartPageProps {
   products: Product[];
@@ -72,7 +73,7 @@ export const CartPage = ({ products, isLoading, error }: CartPageProps) => {
                   return (
                     <li key={`${product.id}-${product.selectedVolumeId}`} className={styles.item}>
                       <Link className={styles.imageLink} to={getProductPath(product.slug)} aria-label={`Открыть ${product.title}`}>
-                        <img className={styles.image} src={product.image} alt={product.title} />
+                        <ProductImage className={styles.image} src={product.image} alt={product.title} />
                       </Link>
 
                       <div className={styles.info}>

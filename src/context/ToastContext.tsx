@@ -1,12 +1,5 @@
-import { createContext, useEffect, useMemo, useState, type ReactNode } from "react";
-
-interface ToastContextValue {
-  isVisible: boolean;
-  message: string;
-  showToast: (message: string) => void;
-}
-
-export const ToastContext = createContext<ToastContextValue | null>(null);
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { ToastContext } from "./toast-context";
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [message, setMessage] = useState("");
