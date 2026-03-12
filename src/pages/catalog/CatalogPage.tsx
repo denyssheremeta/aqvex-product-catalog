@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import styles from "./CatalogPage.module.css";
-import { Header } from "../components/header/Header";
-import { CatalogToolbar } from "../components/catalog-toolbar/CatalogToolbar";
-import { ProductGrid } from "../components/product-grid/ProductGrid";
-import { Pagination } from "../components/pagination/Pagination";
-import { Footer } from "../components/footer/Footer";
-import { Toast } from "../components/toast/Toast";
-import { Loader } from "../components/ui/Loader";
-import { ErrorState } from "../components/ui/ErrorState";
-import { EmptyState } from "../components/ui/EmptyState";
-import { useCart } from "../hooks/useCart";
-import { useDebouncedValue } from "../hooks/useDebouncedValue";
-import { PRODUCTS_PER_PAGE } from "../constants/pagination";
-import { sortProducts } from "../utils/sortProducts";
-import { paginate } from "../utils/paginate";
-import type { SortOption } from "../constants/sortOptions";
-import type { Product } from "../types/product";
+import { Header } from "../../components/header/Header";
+import { CatalogToolbar } from "../../components/catalog-toolbar/CatalogToolbar";
+import { ProductGrid } from "../../components/product-grid/ProductGrid";
+import { Pagination } from "../../components/pagination/Pagination";
+import { Footer } from "../../components/footer/Footer";
+import { Toast } from "../../components/toast/Toast";
+import { Loader } from "../../components/ui/Loader";
+import { ErrorState } from "../../components/ui/ErrorState";
+import { EmptyState } from "../../components/ui/EmptyState";
+import { useCart } from "../../hooks/useCart";
+import { useDebouncedValue } from "../../hooks/useDebouncedValue";
+import { PRODUCTS_PER_PAGE } from "../../constants/pagination";
+import { sortProducts } from "../../utils/sortProducts";
+import { paginate } from "../../utils/paginate";
+import type { SortOption } from "../../constants/sortOptions";
+import type { Product } from "../../types/product";
 
 interface CatalogPageProps {
   products: Product[];
@@ -24,7 +24,7 @@ interface CatalogPageProps {
 }
 
 export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) => {
-  const { addedProductIds, toggleCart, isInCart } = useCart();
+  const { toggleCart, isInCart } = useCart();
 
   const [searchValue, setSearchValue] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("popular");
@@ -80,12 +80,14 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleToggleCart = (product: Product) => {
-    const isAlreadyAdded = isInCart(product.id);
+  const handleToggleCart = (product: Product, selectedVolumeId: string) => {
+    const isAlreadyAdded = isInCart(product.id, selectedVolumeId);
 
-    toggleCart(product);
+    toggleCart(product, selectedVolumeId);
     setToastMessage(
-      isAlreadyAdded ? `Товар "${product.title}" удален из корзины` : `Товар "${product.title}" добавлен в корзину`,
+      isAlreadyAdded
+        ? `Товар "${product.title}" удален из корзины`
+        : `Товар "${product.title}" добавлен в корзину`,
     );
     setIsToastVisible(true);
   };
@@ -96,7 +98,7 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
 
       <main className={styles.page}>
         <div className="container">
-          <h1 className="srOnly">AQVEX - Каталог товаров для ухода за авто</h1>
+          <h1 className="srOnly">AQVEX - каталог товаров для ухода за авто</h1>
 
           {isLoading ? (
             <div className={styles.contentState}>
@@ -122,7 +124,7 @@ export const CatalogPage = ({ products, isLoading, error }: CatalogPageProps) =>
                 </div>
               ) : (
                 <>
-                  <ProductGrid products={currentProducts} addedProductIds={addedProductIds} onToggleCart={handleToggleCart} />
+                  <ProductGrid products={currentProducts} isInCart={isInCart} onToggleCart={handleToggleCart} />
 
                   <Pagination
                     currentPage={resolvedCurrentPage}

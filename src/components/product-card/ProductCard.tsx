@@ -6,11 +6,11 @@ import { formatPrice } from "../../utils/formatPrice";
 
 interface ProductCardProps {
   product: Product;
-  isAdded: boolean;
-  onToggleCart: (product: Product) => void;
+  isInCart: (productId: string, selectedVolumeId: string) => boolean;
+  onToggleCart: (product: Product, selectedVolumeId: string) => void;
 }
 
-export const ProductCard = ({ product, isAdded, onToggleCart }: ProductCardProps) => {
+export const ProductCard = ({ product, isInCart, onToggleCart }: ProductCardProps) => {
   const [selectedVolumeId, setSelectedVolumeId] = useState(product.selectedVolumeId);
 
   const resolvedSelectedVolumeId = product.volumes.some((volume) => volume.id === selectedVolumeId)
@@ -21,6 +21,7 @@ export const ProductCard = ({ product, isAdded, onToggleCart }: ProductCardProps
     return product.volumes.find((volume) => volume.id === resolvedSelectedVolumeId) ?? product.volumes[0] ?? null;
   }, [product.volumes, resolvedSelectedVolumeId]);
 
+  const isAdded = isInCart(product.id, resolvedSelectedVolumeId);
   const discount = getDiscountPercent(product.oldPrice, product.price, product.discountPercent);
   const hasVolumeOptions = product.volumes.length > 1;
   const isButtonDisabled = !product.isAvailable || (selectedVolume ? !selectedVolume.in_stock : false);
@@ -77,7 +78,7 @@ export const ProductCard = ({ product, isAdded, onToggleCart }: ProductCardProps
         <button
           className={`${styles.cartButton} ${isAdded ? styles.cartButtonAdded : ""}`}
           type="button"
-          onClick={() => onToggleCart(product)}
+          onClick={() => onToggleCart(product, resolvedSelectedVolumeId)}
           disabled={isButtonDisabled}
           aria-pressed={isAdded}
         >

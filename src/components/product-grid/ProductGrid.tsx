@@ -4,21 +4,17 @@ import { ProductCard } from "../product-card/ProductCard";
 
 interface ProductGridProps {
   products: Product[];
-  addedProductIds: string[];
-  onToggleCart: (product: Product) => void;
+  isInCart: (productId: string, selectedVolumeId: string) => boolean;
+  onToggleCart: (product: Product, selectedVolumeId: string) => void;
 }
 
-export const ProductGrid = ({ products, addedProductIds, onToggleCart }: ProductGridProps) => {
+export const ProductGrid = ({ products, isInCart, onToggleCart }: ProductGridProps) => {
   return (
     <section aria-label="Список товаров">
       <ul className={styles.grid}>
         {products.map((product) => (
           <li key={product.id} className={styles.item}>
-            <ProductCard
-              product={product}
-              isAdded={addedProductIds.includes(product.id)}
-              onToggleCart={onToggleCart}
-            />
+            <ProductCard product={product} isInCart={isInCart} onToggleCart={onToggleCart} />
           </li>
         ))}
       </ul>
