@@ -1,0 +1,14 @@
+.header {
+  padding: 24px 0 12px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}

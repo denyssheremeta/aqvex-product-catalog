@@ -1,0 +1,156 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.imageWrap {
+  height: 260px;
+  background: #f2f4f7;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+
+.oldPrice {
+  font-size: 14px;
+  color: #d56076;
+  text-decoration: line-through;
+}
+
+.currentPrice {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.discount {
+  background: #ff5f7a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 999px;
+}
+
+.title {
+  min-height: 60px;
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stars {
+  color: #4f8df7;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.reviewCount {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #1d8b50;
+  font-size: 12px;
+}
+
+.stockDot {
+  width: 8px;
+  height: 8px;
+  background: #1db55f;
+  border-radius: 50%;
+}
+
+.delivery {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.volumeSelect {
+  height: 38px;
+  min-width: 90px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.cartButton {
+  flex: 1;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: #dfeeff;
+  color: #17324f;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cartButton:hover:not(:disabled) {
+  background: #cfe5ff;
+}
+
+.cartButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.cartButtonAdded {
+  background: #d9f6e5;
+  color: #16643a;
+}
+
+.buttonIcon {
+  width: 14px;
+  height: 14px;
+}
